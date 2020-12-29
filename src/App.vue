@@ -1,12 +1,10 @@
 <template>
   <div id="app">
-    <h1>Hello Vue!</h1>
     <MainWrapper/>
   </div>
 </template>
 
 <script>
-
   import MainWrapper from "./components/MainWrapper";
 
   export default {

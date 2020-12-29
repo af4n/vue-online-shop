@@ -1,38 +1,19 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from "axios";
+import mutations from "../router/mutations/mutations";
+import actions from "../router/actions/actions";
+import getters from "../router/getters/getters";
 
 Vue.use(Vuex);
 
 let store = new Vuex.Store({
   state: {
-    products: []
+    products: [],
+    basket: []
   },
-  mutations: {
-    SET_PRODUCTS_TO_STATE: (state, products) => {
-      state.products = products
-    }
-  },
-  actions: {
-    GET_PRODUCTS_FROM_API({commit}) {
-      return axios('http://localhost:3000/products', {
-        method: "GET"
-      })
-        .then((products) => {
-          commit('SET_PRODUCTS_TO_STATE', products.data)
-          return products;
-        })
-        .catch((error) => {
-          console.log(error)
-          return error
-        })
-    }
-  },
-  getters: {
-    PRODUCTS(state) {
-      return state.products
-    }
-  }
+  mutations,
+  actions,
+  getters
 })
 
 export default store

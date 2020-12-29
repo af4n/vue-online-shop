@@ -1,33 +1,29 @@
 <template>
   <div class="main-wrapper">
-    <p>{{title}}</p>
-    <Catalog />
-    <Basket />
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
 <script>
-  import Catalog from "./Catalog";
-  import Basket from "./Basket";
-
   export default {
     name: 'MainWrapper',
-    components: {
-      Basket,
-      Catalog
-    },
-    props: {},
-    data() {
-      return {
-        title: 'Main wrapper'
+    props: {
+      basket_data: {
+        type: Array,
+        default() {
+          return [];
+        }
       }
+    },
+    data() {
+      return {}
     },
     computed: {},
     methods: {},
     watch: {},
-    mounted() {
-      console.log('Hello I am main wrapper!')
-    },
+    mounted() {}
   }
 </script>
 
@@ -35,5 +31,8 @@
   .main-wrapper {
     max-width: 900px;
     margin: 0 auto;
+  }
+  .btn {
+    background-color: #ee6e73!important;
   }
 </style>

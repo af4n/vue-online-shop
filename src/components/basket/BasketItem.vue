@@ -5,7 +5,7 @@
          alt="image">
     <div class="basket-item__info">
       <p>{{basket_item.name}}</p>
-      <p>Код товара:{{basket_item.article}}</p>
+      <p>Код товара: {{basket_item.article}}</p>
       <p>Цена: {{Number.parseInt(basket_item.price)}} &#8372;</p>
     </div>
     <div class="basket-item__quantity">
@@ -69,6 +69,11 @@
     padding: 16px;
     &__image {
       max-width: 50px
+    }
+    &__quantity {
+      span {
+        font-size: 18px;
+      }
     }
     &__quantity__btn {
       cursor: pointer;

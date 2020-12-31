@@ -55,19 +55,22 @@
 <style lang="scss">
   .select {
     position: relative;
-    max-width: 200px;
+    width: 200px;
     display: block;
     cursor: pointer;
+
     p {
       margin: 0;
       padding: 8px;
     }
+
     .options {
       position: absolute;
       top: 30px;
       right: 0;
       width: 100%;
       z-index: 1;
+
       p:hover {
         background: #eeeeee;
       }

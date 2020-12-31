@@ -2,9 +2,9 @@
   <div class="basket">
     <h3>Корзина</h3>
     <router-link :to="{name: 'catalog'}">
-      <button class="basket__link-to-catalog btn light-blue darken-4"><i class="medium material-icons">arrow_back</i>Назад</button>
+      <button class="basket__link-to-catalog btn waves-effect waves-light"><i class="medium material-icons">arrow_back</i>Назад</button>
     </router-link>
-    <p v-if="!basket.length">Товаров нет в корзине...</p>
+    <p v-if="!basket.length">Товаров пока нет в корзине...</p>
     <BasketItem v-for="(item, index) in basket"
                 :key="item.article"
                 :basket_item="item"
@@ -13,8 +13,8 @@
                 @incrementItem="increment(index)"
     />
     <div class="basket__total">
-      <p>Общая сумма: {{basketTotalCost}} &#8372;</p>
-      <button class="basket__total-btn btn white"
+      <p>Общая сумма: {{basketTotalCost | toFix | formatedPrice}}</p>
+      <button class="basket__total-btn btn white waves-effect waves-dark"
               v-if="basket.length"
       >Оформить заказ</button>
     </div>
@@ -24,6 +24,8 @@
 <script>
   import BasketItem from "./BasketItem";
   import {mapActions} from "vuex"
+  import toFix from "../../filters/toFix"
+  import formatedPrice from "../../filters/price-format";
 
   export default {
     name: "Basket",
@@ -41,13 +43,17 @@
     data() {
       return {}
     },
+    filters: {
+      toFix,
+      formatedPrice
+    },
     computed: {
       basketTotalCost() {
         let result = []
 
         if (this.basket.length) {
           for (let item of this.basket) {
-            result.push(Number.parseInt(item.price) * item.quantity)
+            result.push(item.price * item.quantity)
           }
 
           result = result.reduce(function (sum, el) {
@@ -83,12 +89,15 @@
 
 <style lang="scss">
   .basket {
+    max-width: 900px;
+    margin: 0 auto;
     margin-bottom: 115px;
     &__link-to-catalog {
       position: absolute;
-      top: 10px;
+      top: 75px;
       left: 10px;
       display: flex;
+      background-color: #484966!important;
       .material-icons {
         padding-right: 5px;
       }
@@ -101,7 +110,7 @@
       padding: 16px;
       display: flex;
       justify-content: space-around;
-      background: #43a047;
+      background: #484966;
       color: #fff;
       font-size: 20px;
       &-btn {

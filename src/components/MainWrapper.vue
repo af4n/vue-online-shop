@@ -1,5 +1,6 @@
 <template>
   <div class="main-wrapper">
+    <Header />
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
@@ -7,8 +8,13 @@
 </template>
 
 <script>
+  import Header from "./layouts/Header";
+
   export default {
     name: 'MainWrapper',
+    components: {
+      Header
+    },
     props: {
       basket_data: {
         type: Array,
@@ -29,7 +35,6 @@
 
 <style lang="scss">
   .main-wrapper {
-    max-width: 900px;
     margin: 0 auto;
   }
   .btn {

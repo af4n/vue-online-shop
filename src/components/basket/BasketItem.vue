@@ -6,7 +6,7 @@
     <div class="basket-item__info">
       <p>{{basket_item.name}}</p>
       <p>Код товара: {{basket_item.article}}</p>
-      <p>Цена: {{Number.parseInt(basket_item.price)}} &#8372;</p>
+      <p>Цена: {{basket_item.price | toFix | formatedPrice}}</p>
     </div>
     <div class="basket-item__quantity">
       <div>Количество: </div>
@@ -20,13 +20,16 @@
             @click="incrementItem"
       >+</span>
     </div>
-    <button class="basket-item__btn btn red darken-4"
+    <button class="basket-item__btn btn waves-effect waves-light"
             @click="deleteFromBasket"
     ><i class="small material-icons">delete_forever</i>Удалить</button>
   </div>
 </template>
 
 <script>
+  import toFix from "../../filters/toFix";
+  import formatedPrice from "../../filters/price-format";
+
   export default {
     name: "BasketItem",
     components: {},
@@ -40,6 +43,10 @@
     },
     data() {
       return {}
+    },
+    filters: {
+      toFix,
+      formatedPrice
     },
     computed: {},
     methods: {

@@ -1,6 +1,9 @@
 import axios from "axios";
 
 export default {
+  GET_SEARCH_VALUE_TO_VUEX({commit}, value) {
+    commit('SET_SEARCH_VALUE_TO_VUEX', value)
+  },
   GET_PRODUCTS_FROM_API({commit}) {
     return axios('http://localhost:3000/products', {
       method: 'GET'

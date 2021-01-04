@@ -1,5 +1,9 @@
 <template>
   <div class="catalog">
+    <Notification :messages="messages"
+                  :timeout="3000"
+    />
+
     <h3>Каталог</h3>
     <router-link :to="{name: 'basket', params: {basket: BASKET}}">
       <div class="catalog__link-to-basket card"><i class="small material-icons">shopping_cart</i>Корзина:
@@ -52,10 +56,11 @@
   import CatalogItem from "./CatalogItem";
   import {mapActions, mapGetters} from 'vuex'
   import Select from "../Select";
+  import Notification from "../notification/Notification";
 
   export default {
     name: 'Catalog',
-    components: {Select, CatalogItem},
+    components: {Select, CatalogItem, Notification},
     props: {},
     data() {
       return {
@@ -65,9 +70,59 @@
           {name: 'Женские', value: 'ж'}
         ],
         selected: 'Все',
-        sortedProducts: [],
+        sortedProducts: [
+          {
+            "image": "1.jpg",
+            "name": "T-shirt 1",
+            "price": 2100.234234234,
+            "article": "T1",
+            "available": true,
+            "category": "Мужские"
+          },
+          {
+            "image": "2.jpg",
+            "name": "T-shirt 2",
+            "price": 3150.12312412,
+            "article": "T2",
+            "available": true,
+            "category": "Женские"
+          },
+          {
+            "image": "3.jpg",
+            "name": "T-shirt 3",
+            "price": 4200.51524,
+            "article": "T3",
+            "available": false,
+            "category": "Женские"
+          },
+          {
+            "image": "4.jpg",
+            "name": "T-shirt 4",
+            "price": 5300.1245512,
+            "article": "T4",
+            "available": true,
+            "category": "Мужские"
+          },
+          {
+            "image": "5.jpg",
+            "name": "T-shirt 5",
+            "price": 6500.3522314,
+            "article": "T5",
+            "available": false,
+            "category": "Женские"
+          },
+          {
+            "image": "6.jpeg",
+            "name": "T-shirt 6",
+            "price": 8700.4124123,
+            "article": "T6",
+            "available": true,
+            "category": "Женские"
+          }
+        ],
         minPrice: 0,
-        maxPrice: 10000
+        maxPrice: 10000,
+        messages: []
       }
     },
     computed: {
@@ -91,6 +146,12 @@
       ]),
       addToBasket(product) {
         this.ADD_TO_BASKET(product)
+          .then(() => {
+            let timeStamp = Date.now().toLocaleString()
+            this.messages.unshift(
+              {name: 'Товар добавлен в корзину!', icon: 'check_circle', id: timeStamp}
+            )
+          })
       },
       sortByCategories(category) {
         let vm = this
@@ -104,16 +165,6 @@
             return e.category === category.name
           })
         }
-        // this.selected = category.name
-
-        // this.sortedProducts = []
-        // let vm = this
-        // this.PRODUCTS.map(function (item) {
-        //   if (item.category === category.name) {
-        //     vm.sortedProducts.push(item)
-        //   }
-        // })
-        // this.selected = category.name
       },
       setRangeSlider() {
         if (this.minPrice > this.maxPrice) {
@@ -155,12 +206,14 @@
   .catalog {
     max-width: 900px;
     margin: 0 auto;
+
     &__list {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
     }
+
     &__link-to-basket {
       position: absolute;
       top: 70px;
@@ -177,20 +230,24 @@
         padding-right: 5px;
       }
     }
+
     .filters {
       display: flex;
       align-items: center;
+
       .range-slider {
         width: 200px;
         margin: auto 16px;
         text-align: center;
         position: relative;
         padding-top: 30px;
+
         svg, input[type=range] {
           position: absolute;
           left: 0;
           bottom: 0;
         }
+
         input[type=range]::-webkit-slider-thumb {
           z-index: 2;
           position: relative;
@@ -198,8 +255,10 @@
           margin-top: -7px;
         }
       }
+
       .range-value {
         padding: 8px;
+
         p {
           margin: 0;
         }

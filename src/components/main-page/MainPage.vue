@@ -21,5 +21,9 @@
     .btn-large {
       background: #484966 !important;
     }
-}
+    h1 {
+      margin-top: 12rem;
+      margin-bottom: 5rem;
+    }
+  }
 </style>
